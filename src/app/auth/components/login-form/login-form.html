@@ -1,15 +1,19 @@
 <div class="form-wrapper">
-    <form>
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
         <div class="form-group">
-            <label class="form-label" for="email">E-mail</label>
-            <input class="form-input" type="email" name="email" id="email">
-            <small>E-mail é obrigatório</small>
+            <label class="form-label" [class.label-error]="email.touched && email.invalid" for="email">E-mail</label>
+            <input class="form-input" [class.input-error]="email.touched && email.invalid" formControlName="email" type="email" name="email" id="email">
+            @if (email.touched && email.invalid){
+                <small>Email é obrigatório</small>
+            }
         </div>
         <div class="form-group">
-            <label class="form-label" for="senha">Senha</label>
-            <input class="form-input" type="password" name="password" id="password">
-            <small>Senha é obrigatória</small>
+            <label class="form-label" [class.label-error]="password.touched && password.invalid" for="senha">Senha</label>
+            <input class="form-input" [class.input-error]="password.touched && password.invalid" formControlName="password" type="password" name="password" id="password">
+            @if (password.touched && password.invalid){
+                <small>Senha deve conter no mínimo 8 digitos</small>
+            }
         </div>
-        <button class="form-button">Entrar</button>
+        <button class="form-button" type="submit">Entrar</button>
     </form>
 </div>

@@ -31,8 +31,17 @@ form {
     padding: var(--spacing-sm);
 }
 
+.form-input:focus, .form-input:focus-visible{
+    border: 2px solid var(--stroke);
+}
+
 .form-button {
     background-color: var(--dark-green);
+    cursor: pointer;
+}
+.form-button:hover{
+    border: 2px solid var(--stroke);
+    color: #fff;
 }
 
 .input-error{
@@ -40,5 +49,5 @@ form {
 }
 
 .form-group, .label-error{
-    color: var(--danger);
+    color: var(--danger) !important;
 }
