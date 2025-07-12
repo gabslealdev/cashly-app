@@ -1,0 +1,71 @@
+.bg-wrapper {
+    background-image: url("/assets/bkg-1.jpg");
+    background-size: cover;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    overflow: hidden;
+    width: 100%;
+    height: 100dvh;
+}
+
+.bg-overlay {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    inset: 0;
+    background-color: rgba(18, 18, 18, 0.85);
+    z-index: 1;
+}
+
+.container {
+    display: flex;
+    width: 66rem;
+    height: 44rem;
+
+    & .image-content {
+        background-image: url("/assets/bkg-3.jpg");
+        background-size: cover;
+        background-position: left;
+        width: 25%;
+        height: inherit;
+        border-bottom-left-radius: 30px;
+        border-top-left-radius: 30px;
+    }
+
+    & .content-wrapper {
+        background-color: #121212;
+        width: 75%;
+        height: inherit;
+        border-top-right-radius: 30px;
+        border-bottom-right-radius: 30px;
+        padding: var(--spacing-lg);
+        display: flex;
+        flex-direction: column;
+    }
+}
+
+.logo-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--spacing-sm);
+
+    & h1 {
+        font-family: var(--font-heading);
+        font-size: var(--spacing-md);
+        color: #FFF;
+    }
+
+    & img{
+        width: 220px;
+    }
+}
+
+.form-container{
+    margin-top: auto;
+    display: flex;
+    justify-content: space-around;
+    flex-shrink: 0; 
+}

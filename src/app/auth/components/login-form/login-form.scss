@@ -1,7 +1,13 @@
+.form-wrapper{
+    width: 34rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
 form {
     padding: var(--spacing-sm);
     background-color: var(--bg-primary);
-    max-width: 40rem;
+    max-width: inherit
 }
 
 .form-group {
@@ -51,3 +57,17 @@ form {
 .form-group, .label-error{
     color: var(--danger) !important;
 }
+
+.links {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #ced4da;
+    gap: var(--spacing-sm);
+    font-size: .75rem;
+    font-weight: 200;
+}
+.links p:hover{
+    color: #fff;
+}
+
