@@ -8,18 +8,34 @@
   box-sizing: border-box;
 }
 
-html, body {
+html,
+body {
   height: 100%;
   font-family: sans-serif;
   background-color: #f9f9f9;
   color: #333;
 }
 
-button, input, select, textarea {
+button,
+input,
+select,
+textarea {
   font-family: inherit;
   font-size: 100%;
   line-height: 1.15;
   border: none;
   outline: none;
   background: none;
+}
+
+@media (max-width: 768px) {
+
+  html,
+  body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow: hidden;
+  }
+
 }
