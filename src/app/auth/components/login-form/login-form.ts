@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AuthService } from '../../services/auth-service';
 
 @Component({
   selector: 'app-login-form',
@@ -9,9 +10,11 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
   styleUrls: ['./login-form.scss']
 })
 export class LoginForm {
+  private formBuilder = inject(FormBuilder)
+  private authService = inject(AuthService)
   public loginForm: FormGroup
-  constructor(private _formBuilder: FormBuilder) {
-    this.loginForm = this._formBuilder.group({
+  constructor() {
+    this.loginForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(8)]]
     });
@@ -26,10 +29,18 @@ export class LoginForm {
   }
 
   onSubmit(){
-    console.log(this.loginForm.valid);
-    if(this.loginForm.valid){
-      console.log(this.loginForm.value)
-    }
+    if(this.loginForm.invalid) return; 
+
+    this.authService.login(this.loginForm.value).subscribe({
+      next: (res) => {
+        console.log('Login bem-sucedido!', res);
+        alert('Parabéns você concluiu o login')
+      },
+      error: (err) => {
+        console.error('Erro no login', err);
+        alert('Credenciais inválidas');
+      }
+    })
   }
 }
 
