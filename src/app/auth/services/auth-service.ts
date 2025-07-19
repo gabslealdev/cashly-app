@@ -18,7 +18,8 @@ export class AuthService {
         localStorage.setItem('auth_token', response.token);
       }),
       catchError(error =>{
-        return throwError(() => error);
+        const errorMessage = error?.error?.errorMessages?.[0] || 'Por favor verifique e-mail e/ou senha e tente novamente.'
+        return throwError(() => new Error(errorMessage));
       })
     );
   }

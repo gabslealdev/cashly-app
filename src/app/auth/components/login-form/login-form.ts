@@ -10,9 +10,10 @@ import { AuthService } from '../../services/auth-service';
   styleUrls: ['./login-form.scss']
 })
 export class LoginForm {
-  private formBuilder = inject(FormBuilder)
-  private authService = inject(AuthService)
-  public loginForm: FormGroup
+  private formBuilder = inject(FormBuilder);
+  private authService = inject(AuthService);
+  public loginForm: FormGroup;
+  public errorMessage: string | null = null;
   constructor() {
     this.loginForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
@@ -34,11 +35,11 @@ export class LoginForm {
     this.authService.login(this.loginForm.value).subscribe({
       next: (res) => {
         console.log('Login bem-sucedido!', res);
-        alert('Parabéns você concluiu o login')
+        alert(`Seja bem-vindo, ${res.name}`)
       },
-      error: (err) => {
-        console.error('Erro no login', err);
-        alert('Credenciais inválidas');
+      error: (err: Error) => {
+        err.message
+        this.errorMessage = err.message
       }
     })
   }

@@ -13,10 +13,14 @@
             @if (password.touched && password.invalid){
                 <small>Senha deve conter no mínimo 8 digitos</small>
             }
+            @if (errorMessage){
+                <small>{{errorMessage}}</small>
+            }
         </div>
         <button class="form-button" type="submit">Entrar</button>
     </form>
     <div class="links">
-        <p>Ainda não tem conta? <a href=""> Acesse</a></p>
+        <p><a class="link" href="">Esqueci minha senha</a></p>
+        <p>Ainda não tem conta? <a class="link">Cadastre-se</a></p>
     </div>
 </div>
