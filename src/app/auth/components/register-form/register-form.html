@@ -1,0 +1,40 @@
+<div class="form-wrapper">
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+            <label class="form-label" [class.label-error]="name.touched && name.invalid" for="name"
+                class="form-label">Name</label>
+            <input class="form-input" [class.input-error]="name.touched && name.invalid" type="text" class="form-input"
+                formControlName="name" name="name" id="name">
+            @if (name.touched && name.invalid){
+            <small>O nome deve ter entre 3 e 30 caracteres</small>
+            }
+        </div>
+        <div class="form-group">
+            <label class="form-label" [class.label-error]="email.touched && email.invalid" for="email"
+                class="form-label">Email</label>
+            <input class="form-input" [class.input-error]="email.touched && email.invalid" type="email"
+                class="form-input" formControlName="email" name="email" id="name">
+            @if (email.touched && email.invalid){
+            <small>Email é obrigatório</small>
+            }
+        </div>
+        <div class="form-group">
+            <label [class.label-error]="password.touched && password.invalid || registerForm.errors?.['mismatch']" class="form-label" for="senha"
+                class="form-label">Senha</label>
+            <input [class.input-error]="password.touched && password.invalid || registerForm.errors?.['mismatch']" type="password" class="form-input"
+                formControlName="password" name="password" id="password">
+            @if (password.touched && password.invalid){
+            <small>Senha deve conter no mínimo 8 digitos</small>
+            }
+        </div>
+        <div class="form-group">
+            <label [class.label-error]="password.touched && registerForm.errors?.['mismatch']" for="confirma-senha" class="form-label" id="confirm-password">Confirmação de
+                senha</label>
+            <input [class.input-error]="password.touched && registerForm.errors?.['mismatch']" formControlName="confirmPassword" name="confirmPassword" type="password" class="form-input">
+            @if (registerForm.errors?.['mismatch'] && confirmPassword.touched){
+            <small>As senhas não coincidem</small>
+            }
+        </div>
+        <app-auth-button></app-auth-button>
+    </form>
+</div>

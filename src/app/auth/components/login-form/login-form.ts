@@ -2,10 +2,13 @@ import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth-service';
+import { AuthButton } from "../auth-button/auth-button";
+import { RouterLink } from '@angular/router';
+import { LoginRequest } from '../../models/requests/login/login-request.model';
 
 @Component({
   selector: 'app-login-form',
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule, AuthButton, RouterLink],
   templateUrl: './login-form.html',
   styleUrls: ['./login-form.scss']
 })
@@ -16,7 +19,7 @@ export class LoginForm {
   public errorMessage: string | null = null;
   constructor() {
     this.loginForm = this.formBuilder.group({
-      email: ['', [Validators.required, Validators.email]],
+      email: ['', [Validators.required, Validators.email, , Validators.maxLength(80)]],
       password: ['', [Validators.required, Validators.minLength(8)]]
     });
   }
@@ -30,12 +33,12 @@ export class LoginForm {
   }
 
   onSubmit(){
-    if(this.loginForm.invalid) return; 
+    if(this.loginForm.invalid) return;
 
     this.authService.login(this.loginForm.value).subscribe({
       next: (res) => {
         console.log('Login bem-sucedido!', res);
-        alert(`Seja bem-vindo, ${res.name}`)
+        alert(`Seja bem-vindo, ${res.name}`);
       },
       error: (err: Error) => {
         err.message

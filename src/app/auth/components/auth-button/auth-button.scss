@@ -1,0 +1,14 @@
+.auth-button {
+    margin-top: var(--spacing-sm);
+    width: 100%;
+    height: 2.5rem;
+    border-radius: var(--spacing-sm);
+    color: var(--primary);
+    background-color: var(--dark-green);
+    cursor: pointer;
+}
+
+.auth-button:hover {
+    border: 2px solid var(--stroke);
+    color: #fff;
+}
