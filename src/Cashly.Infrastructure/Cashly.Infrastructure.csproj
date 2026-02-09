@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net9.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Cashly.Application\Cashly.Application.csproj" />
+    <ProjectReference Include="..\Cashly.Domain\Cashly.Domain.csproj" />
+  </ItemGroup>
+
+</Project>
