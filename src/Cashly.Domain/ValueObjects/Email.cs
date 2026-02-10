@@ -23,7 +23,7 @@ namespace Cashly.Domain.ValueObjects
         private static void Validate(string email)
         {
             DomainExceptionValidation.When(string.IsNullOrWhiteSpace(email), "Email is required");
-            DomainExceptionValidation.When(!email.Contains("@"), "Email is invalid");
+            DomainExceptionValidation.When(!email.Contains("@"), "Email is invalid"); 
         }
 
         public override string ToString() => Value;
