@@ -17,8 +17,8 @@ namespace Cashly.Domain.ValueObjects
 
         public static Name Create(string firstName, string lastName)
         {
-            Normalize(firstName);
-            Normalize(lastName);
+            firstName = Normalize(firstName);
+            lastName = Normalize(lastName);
             Validate(firstName, lastName);
             return new Name(firstName, lastName);
         }
