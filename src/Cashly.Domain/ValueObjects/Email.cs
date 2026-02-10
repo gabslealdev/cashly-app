@@ -14,7 +14,7 @@ namespace Cashly.Domain.ValueObjects
 
         public static Email Create(string email)
         {
-            Normalize(email);
+            email = Normalize(email);
             Validate(email);
             return new Email(email);
         }
