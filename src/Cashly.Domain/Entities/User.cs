@@ -24,6 +24,24 @@ namespace Cashly.Domain.Entities
 
         public static User Create(Name name, Email email, PasswordHash passwordHash)
             => new User(Guid.NewGuid(), name, email, passwordHash);
+
+        public void ChangeName(string firstName, string lastName)
+        {
+            Name = Name.Create(firstName, lastName);
+            UpdatedAt = DateTimeOffset.UtcNow;           
+        }
+
+        public void ChangePasswordHash(string passwordHash)
+        {
+            PasswordHash = PasswordHash.Create(passwordHash);
+            UpdatedAt = DateTimeOffset.UtcNow;
+        }
+
+        public void ChangeEmail(string email)
+        {
+            Email = Email.Create(email);
+            UpdatedAt = DateTimeOffset.UtcNow;
+        }
         
     }
 }
