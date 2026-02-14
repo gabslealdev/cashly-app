@@ -7,21 +7,22 @@ namespace Cashly.Domain.ValueObjects
         public string FirstName { get; private set; } 
         public string LastName { get; private set; }
 
-        private Name(string firstName, string Lastname)
+        private Name(string firstName, string lastName)
         {
+            firstName = Normalize(firstName);
+            lastName = Normalize(lastName);
+
+            Validate(firstName, lastName);
+
             FirstName = firstName;
-            LastName = Lastname;
+            LastName = lastName;
         }
 
         private Name(){}
 
-        public static Name Create(string firstName, string lastName)
-        {
-            firstName = Normalize(firstName);
-            lastName = Normalize(lastName);
-            Validate(firstName, lastName);
-            return new Name(firstName, lastName);
-        }
+        public static Name Create(string firstName, string lastName) 
+            => new Name(firstName, lastName);
+
 
         private static string Normalize(string value) => value?.Trim() ?? string.Empty;
 

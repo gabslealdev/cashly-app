@@ -14,9 +14,7 @@ namespace Cashly.Domain.ValueObjects
         private Money() { }
 
         public static Money Create(decimal value)
-        {
-            return new Money(value);
-        }
+            => new Money(value);
 
 
         public static Money operator +(Money a, Money b) => new(a.Value + b.Value);

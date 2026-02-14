@@ -8,22 +8,20 @@ namespace Cashly.Domain.ValueObjects
 
         private Email(string value)
         {
+            value = Normalize(value);
+            Validate(value);
             Value = value;
         }
-        private Email() { }
+        private Email(){}
 
-        public static Email Create(string email)
-        {
-            email = Normalize(email);
-            Validate(email);
-            return new Email(email);
-        }
+        public static Email Create(string value) 
+            => new Email(value);
+
         private static string Normalize(string value) => value?.Trim().ToLower() ?? string.Empty;
 
-        private static void Validate(string email)
+        private static void Validate(string value)
         {
-            DomainExceptionValidation.When(string.IsNullOrWhiteSpace(email), "Email is required");
-            DomainExceptionValidation.When(!email.Contains("@"), "Email is invalid"); 
+            DomainExceptionValidation.When(string.IsNullOrWhiteSpace(value), "Email is required");
         }
 
         public override string ToString() => Value;

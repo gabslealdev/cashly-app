@@ -8,18 +8,14 @@ namespace Cashly.Domain.ValueObjects
 
         public Title(string value)
         {
+            Validate(value);
             Value = value;
         }
         private Title() { }
 
         public static Title Create(string value)
-        {
-            value = Normalize(value);
-            Validate(value);
-            return new Title(value);
-        }
+            => new Title(value);
 
-        private static string Normalize(string value) => value?.Trim() ?? string.Empty;
 
         private static void Validate(string value)
         {
