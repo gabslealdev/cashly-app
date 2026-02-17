@@ -1,5 +1,6 @@
 ﻿using Cashly.Domain.Entities.Bases;
 using Cashly.Domain.Enums;
+using Cashly.Domain.Exceptions;
 using Cashly.Domain.ValueObjects;
 
 namespace Cashly.Domain.Entities
@@ -12,67 +13,76 @@ namespace Cashly.Domain.Entities
         public TransactionType Type { get; private set; }
         public Guid CategoryId { get; private set; }
         public TransactionStatus Status { get; private set; }
-        public DateTimeOffset OcurredAt { get; private set; }
+        public DateTimeOffset OccurredAt { get; private set; }
         public DateTimeOffset UpdatedAt { get; private set; }
         
 
-        private Transaction(Guid id, Guid cashflowId, string title, decimal amount,TransactionType type, Guid categoryId, TransactionStatus status, DateTimeOffset ocurredAt) : base(id)
+        private Transaction(Guid id, Guid cashflowId, string title, decimal amount,TransactionType type, Guid categoryId, TransactionStatus status, DateTimeOffset occurredAt) : base(id)
         {
-            Id = id;
+            Validate(cashflowId, amount, type, categoryId, status);
             CashflowId = cashflowId;
             Title = Title.Create(title);
             Amount = Money.Create(amount);
             Type = type;
             CategoryId = categoryId;
-            OcurredAt = ocurredAt;
+            OccurredAt = occurredAt;
             Status = status;
             UpdatedAt = DateTimeOffset.UtcNow;
         }
 
         private Transaction(){}
 
-        public static Transaction Create(Guid id,Guid cashflowId, string title, decimal amount, TransactionType type, Guid categoryId, TransactionStatus status, DateTimeOffset ocurredAt)
-            => new Transaction(Guid.NewGuid(), cashflowId, title, amount, type, categoryId, status, ocurredAt);
+        private static void Validate(Guid cashflowId, decimal amount,  TransactionType type, Guid categoryId, TransactionStatus status)
+        {
+            DomainExceptionValidation.When(cashflowId == Guid.Empty, "Cashflow reference is required.");
+            DomainExceptionValidation.When(amount <= 0, "Transaction value must be greater than 0.");
+            DomainExceptionValidation.When(!Enum.IsDefined(typeof(TransactionType), type), "Invalid type.");
+            DomainExceptionValidation.When(categoryId == Guid.Empty, "Category reference is required.");
+            DomainExceptionValidation.When(!Enum.IsDefined(typeof(TransactionStatus), status), "Invalid status.");
+        }
 
-        public void Rename(string title)
+        internal static Transaction Create(Guid cashflowId, string title, decimal amount, TransactionType type, Guid categoryId, TransactionStatus status, DateTimeOffset occurredAt)
+            => new Transaction(Guid.NewGuid(), cashflowId, title, amount, type, categoryId, status, occurredAt);
+
+        internal void Rename(string title)
         {
             Title = Title.Create(title);
             UpdatedAt = DateTimeOffset.UtcNow;
         }
             
-        public void ChangeAmout(decimal value)
+        internal void ChangeAmout(decimal value)
         {
+
             Amount = Money.Create(value);
             UpdatedAt = DateTimeOffset.UtcNow;
         }
 
-        public void ChangeCategory(Guid categoryId)
+        internal void ChangeCategory(Guid categoryId)
         {
             CategoryId = categoryId;
             UpdatedAt = DateTimeOffset.UtcNow;
         }
 
-        public void Rescheduled(DateTimeOffset ocurredAt)
+        internal void Rescheduled(DateTimeOffset occurredAt)
         {
-            OcurredAt = ocurredAt;
+            OccurredAt = occurredAt;
             Status = TransactionStatus.Scheduled;
             UpdatedAt = DateTimeOffset.UtcNow;
-
         }
 
-        public void MarkAsCompleted()
+        internal void MarkAsCompleted()
         {
             Status = TransactionStatus.Completed;
             UpdatedAt = DateTimeOffset.UtcNow;
         }
 
-        public void MarkAsScheduled()
+        internal void MarkAsScheduled()
         {
             Status = TransactionStatus.Scheduled;
             UpdatedAt = DateTimeOffset.UtcNow;
         }
 
-        public void Cancel()
+        internal void Cancel()
         {
             Status = TransactionStatus.Canceled;
             UpdatedAt = DateTimeOffset.UtcNow;
