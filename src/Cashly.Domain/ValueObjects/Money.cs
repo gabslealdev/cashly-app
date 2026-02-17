@@ -1,28 +1,25 @@
-﻿using Cashly.Domain.Exceptions;
-
-namespace Cashly.Domain.ValueObjects
+﻿namespace Cashly.Domain.ValueObjects
 {
     public sealed record Money
     {
-        public decimal Value { get; private set; }
+        public decimal Value { get; }
 
-        public Money(decimal value)
+        private Money(decimal value)
         {
-            Value = value;
+            Value = decimal.Round(value, 2, MidpointRounding.AwayFromZero);
         }
 
         private Money() { }
 
-        public static Money Create(decimal value)
-            => new Money(value);
-
+        public static Money Create(decimal value) => new Money(value);
 
         public static Money operator +(Money a, Money b) => new(a.Value + b.Value);
 
         public static Money operator -(Money a, Money b) => new(a.Value - b.Value);
 
+        public bool isZero() => Value == 0m;
 
-        public override string ToString() => $"R$ {Value:N2}";
+        public override string ToString() => Value.ToString("N2");
 
     }
 }
