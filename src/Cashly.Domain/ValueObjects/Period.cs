@@ -21,6 +21,11 @@ namespace Cashly.Domain.ValueObjects
             DomainExceptionValidation.When(month < 1 || month > 12, "Month must be between 1 and 12");
         }
 
+        public static Period FromDate(DateTimeOffset date)
+        {
+            return Create(date.Year, date.Month); 
+        }
+
         public static Period Create(int year, int month)
         {
             return new Period(year, month);
