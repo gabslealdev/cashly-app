@@ -7,7 +7,6 @@ namespace Cashly.Domain.Entities
     {
         public Key Key { get; private set; } = null!;
         public Title Title { get; private set; } = null!;
-
         public Category() { }  
 
     }
