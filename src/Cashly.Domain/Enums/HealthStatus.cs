@@ -1,7 +1,8 @@
 ﻿namespace Cashly.Domain.Enums
 {
-    public enum ClosedMonthHealthStatus
+    public enum HealthStatus
     {
+        Gray,
         Red,
         Orange,
         Yellow,
