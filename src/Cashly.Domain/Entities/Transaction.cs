@@ -63,7 +63,7 @@ namespace Cashly.Domain.Entities
             UpdatedAt = DateTimeOffset.UtcNow;
         }
 
-        internal void Rescheduled(DateTimeOffset occurredAt)
+        internal void Reschedule(DateTimeOffset occurredAt)
         {
             OccurredAt = occurredAt;
             Status = TransactionStatus.Scheduled;

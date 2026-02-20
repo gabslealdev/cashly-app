@@ -11,19 +11,19 @@ namespace Cashly.Domain.Entities
         public DateTimeOffset CreatedAt { get; private set; }
         public DateTimeOffset UpdatedAt { get; private set; }
 
-        private User(Guid id, Name name, Email email, PasswordHash passwordHash) : base(id)
+        private User(Guid id, string firstName, string lastName, string email, string passwordHash) : base(id)
         {
-            Name = name;
-            Email = email;
-            PasswordHash = passwordHash;
+            Name = Name.Create(firstName, lastName);  
+            Email = Email.Create(email);
+            PasswordHash = PasswordHash.Create(passwordHash);
             CreatedAt = DateTimeOffset.UtcNow;
             UpdatedAt = DateTimeOffset.UtcNow;
         }
 
         private User() { }
 
-        public static User Create(Name name, Email email, PasswordHash passwordHash)
-            => new User(Guid.NewGuid(), name, email, passwordHash);
+        public static User Create(string firstName, string lastName, string email, string passwordHash)
+            => new User(Guid.NewGuid(), firstName, lastName, email, passwordHash);
 
         public void ChangeName(string firstName, string lastName)
         {

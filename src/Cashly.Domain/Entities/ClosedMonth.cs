@@ -11,7 +11,7 @@ namespace Cashly.Domain.Entities
         public Money TotalIncome { get; private set; }
         public Money TotalExpense { get; private set; }
         public Money Balance { get; private set; }
-        public ClosedMonthHealthStatus HealthStatus { get; private set; }
+        public HealthStatus HealthStatus { get; private set; }
         public DateTimeOffset ClosedAt { get; private set; }
 
         private ClosedMonth(Guid id, Guid clashflowId, int year, int month, decimal totalIncome, decimal totalExpense ) : base( id )
@@ -28,23 +28,29 @@ namespace Cashly.Domain.Entities
 
         private ClosedMonth() { }
 
-        private ClosedMonthHealthStatus CalculateHealthStatus()
+        private HealthStatus CalculateHealthStatus()
         {
+            if (TotalIncome.isZero() && TotalExpense.isZero())
+                return HealthStatus.Gray;
+
+            if (TotalIncome.isZero() && TotalExpense.Value > 0)
+                return HealthStatus.Red;
+
             var percentage = ((TotalIncome.Value - TotalExpense.Value) / TotalIncome.Value) * 100;
 
-            if (percentage <= -10.0m)
-                return ClosedMonthHealthStatus.Red;
+            if (percentage <= 0.0m)
+                return HealthStatus.Red;
 
-            if (percentage > -10.0m && percentage <= -5.0m)
-                return ClosedMonthHealthStatus.Orange;
+            if (percentage <= 5.0m)
+                return HealthStatus.Orange;
 
-            if (percentage > -5.0m && percentage <= 5.0m)
-                return ClosedMonthHealthStatus.Yellow;
+            if (percentage <= 10.0m )
+                return HealthStatus.Yellow;
 
-            if (percentage > 5.0m && percentage < 10.0m) 
-                return ClosedMonthHealthStatus.Green;
+            if (percentage <= 20.0m) 
+                return HealthStatus.Green;
 
-            return ClosedMonthHealthStatus.Blue;
+            return HealthStatus.Blue;
         }
         internal static ClosedMonth Create(Guid clashflowId, int year, int month, decimal totalIncome, decimal totalExpense)
             => new ClosedMonth(Guid.NewGuid(), clashflowId, year, month, totalIncome, totalExpense);
